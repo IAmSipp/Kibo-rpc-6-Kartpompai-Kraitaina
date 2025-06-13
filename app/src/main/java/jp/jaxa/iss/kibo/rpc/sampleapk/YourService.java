@@ -137,7 +137,6 @@ public class YourService extends KiboRpcService {
         Mat[] templateImages = new Mat[TEMPLATE_SIZE];
         for (int i = 0; i < TEMPLATE_SIZE; i++) {
             try {
-                // Load template images one by one and store in list
                 InputStream inputStream = getAssets().open(TEMPLATE_IMAGES_NAME[i]);
                 Bitmap bit = BitmapFactory.decodeStream(inputStream);
                 Mat img = new Mat();
@@ -170,7 +169,6 @@ public class YourService extends KiboRpcService {
         Mat rvec = new Mat();
         Mat tvec = new Mat();
 
-        // Assume all markers are same size (e.g., 0.05m or 5cm)
         float markerLength = 0.05f;
 
         Aruco.estimatePoseSingleMarkers(corners, markerLength, cameraMatrix, distCoeffs, rvec, tvec);
@@ -180,7 +178,7 @@ public class YourService extends KiboRpcService {
             tvec.get(0, 0, t);
 
             // Get position of marker in camera coordinate
-            return new Point(t[0], t[1], t[2]); // in meters
+            return new Point(t[0], t[1], t[2]);
         }
 
         return null;
@@ -191,9 +189,9 @@ public class YourService extends KiboRpcService {
         api.flashlightControlFront(0.01f);
 
         try {
-            Thread.sleep(200); // Wait 200ms
+            Thread.sleep(200);
         } catch (InterruptedException e) {
-            e.printStackTrace(); // You can log or handle this better if needed
+            e.printStackTrace();
         }
 
         // get a camera image
@@ -314,7 +312,7 @@ public class YourService extends KiboRpcService {
 
         if (allPoints.isEmpty()) {
             Log.i("Crop", "Not detect any corners");
-            return image; // Fallback: return original image
+            return image;
         }
 
         Log.i("Crop", "Detect all corners");
